@@ -3,10 +3,22 @@ import { Check } from "phosphor-react";
 import { FormEvent, useState } from "react";
 import { api } from "../lib/axios";
 import { useCookies } from 'react-cookie'
+import { useContext } from "react";
+import { SummaryContext } from "../context/summaryContext";
 
 const avaliableWeekDays = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', "Sábado"]
 
 export  function NewHabitForm(){
+
+    const context = useContext(SummaryContext);
+    
+    
+    if (!context) {
+        throw new Error('SummaryTable must be used within a SummaryContext.Provider');
+    }
+
+    const { setSummary } = context;
+
     const [title, setTitle] = useState("")
     const [weekDays, setWeekDays] = useState<number[]>([])
 
@@ -14,16 +26,22 @@ export  function NewHabitForm(){
     const Token = cookiesToken['token'];
 
     async function createNewHabit(event: FormEvent){
+        
         event.preventDefault();
         if (!title || weekDays.length === 0){
             return;
         }
-        api.post('habits', {
+
+
+        await api.post('habits', {
             "title":title,
             "WeekDays": weekDays,
         }, { headers:{Authorization: `Bearer ${Token}`} })
-        
+
+        const response = await api.get('summary', { headers: { Authorization: `Bearer ${Token}` } });          
+        setSummary(response.data);
         setTitle("")
+
         setWeekDays([])
         alert('hábito criado com sucesso')
     }
@@ -34,7 +52,6 @@ export  function NewHabitForm(){
             newWeekDays = weekDays.filter(day => day != weekDay)
         else 
             newWeekDays = [...weekDays, weekDay]
-        
             setWeekDays(newWeekDays)
         
     }

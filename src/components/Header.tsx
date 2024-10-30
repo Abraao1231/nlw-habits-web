@@ -1,20 +1,21 @@
 import logoImage from '../assets/logo.svg'
-import { Cookies } from 'react-cookie';
 import { Link } from 'react-router-dom';
 import { Login } from './User/Login';
 import { UserSideBar } from './User/UserSideBar';
+import {useCookies} from 'react-cookie';
 
 
 export function Header(){
-  const cookie = new Cookies()
-  const user = cookie.get('user');
-  const token = cookie.get('token')
+
+  const [cookies, setCookies] = useCookies();
+  
+
   let component;
   
-    if (!token){
+    if (!cookies.token){
       component = <Login email='' name='Login'/> 
     } else {
-      component = <UserSideBar email={user.email} name={user.name}/>
+      component = <UserSideBar email={cookies.user.email} name={cookies.user.name}/>
 
     }
     return (

@@ -1,0 +1,28 @@
+/* scrollbar.css */
+
+/* Para navegadores baseados em WebKit (Chrome, Safari) */
+::-webkit-scrollbar {
+    height: 10px;
+    margin-top: 2px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent; /* Cor do fundo da barra de rolagem */
+}
+
+::-webkit-scrollbar-thumb {
+    background: #8b8b8b; /* Cor do "polegar" da barra de rolagem */
+    border-radius: 6px; /* Bordas arredondadas do polegar */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #2c2c2c; /* Cor do polegar quando o mouse está sobre ele */
+}
+
+
+body::-webkit-scrollbar-thumb /{
+    background: #2c2c2c; /* Cor do "polegar" da barra de rolagem */
+}
+::-webkit-scrollbar {
+    background: #2c2c2c; /* Cor do "polegar" da barra de rolagem */
+}

@@ -1,17 +1,21 @@
 import * as Dialog from '@radix-ui/react-dialog';
 import {Plus, X} from 'phosphor-react'
 import { NewHabitForm } from './NewHabitForm';
+import { ReactNode } from 'react';
 
-export function ModalNewHabit(){
+interface ModalNewHabitProps {
+  component: ReactNode
+}
+
+export function ModalNewHabit({ component}: ModalNewHabitProps){
+
     return (
         <Dialog.Root>
           <Dialog.Trigger 
             type="button"
-            className="border border-violet-500 font-semibold rounded-lg px-6 py-4 flex items-center gap-3 hover:border-violet-300 transition-colors focus:outline-none focus:ring-2 focus:ring-violet-600 focus:ring-offset-2 focus:ring-offset-background"
           >
-            <Plus size={20} className="text-violet-500"></Plus>
-          
-            Novo hábito
+            {component}
+            
           </Dialog.Trigger>
 
           <Dialog.Portal>

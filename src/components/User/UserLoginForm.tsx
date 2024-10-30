@@ -1,10 +1,9 @@
 import { FormEvent, useState } from "react"
 import { validateEmail } from "../../utils/validateEmail";
 import { api } from "../../lib/axios";
-import { useCookies } from 'react-cookie'
 import { useNavigate } from "react-router-dom";
 import { LoginWithGoole } from "./LoginWithGoogle";
-
+import { useCookies } from "react-cookie";
 
 
 export function NewUserLoginForm() {
@@ -31,10 +30,14 @@ export function NewUserLoginForm() {
 
             setUser('user', response.data.user);
             setToken('token', response.data.token);
-
+            
             return navigate("/dashboard")
         }).catch(response => {
-            alert(response.response.data.message);
+            if (!response.response)
+                alert('erro no servidor')
+            else 
+                alert(response.response.data.message);
+                
         })
     }
 
@@ -51,7 +54,6 @@ export function NewUserLoginForm() {
                     className="p-4 rounded-lg mt-1 bg-zinc-800 text-white placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-offset-zinc-900 focus:ring-violet-600 focus:ring-offset-2 "
                     type="text"
                     name=""
-                    id="title"
                     placeholder="Ex:. anaMaria@gmail.com"
                     autoFocus
                     onChange={event => setEmail(event.target.value)}
@@ -64,18 +66,17 @@ export function NewUserLoginForm() {
                     className="p-4 rounded-lg mt-1 bg-zinc-800 text-white placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-offset-zinc-900 focus:ring-violet-600 focus:ring-offset-2 "
                     type="password"
                     name=""
-                    id="title"
                     placeholder="Digite sua senha"
                     autoFocus
                     onChange={event => setPassword(event.target.value)}
                 />
-              <button
+                <button
                     className='mt-4 bg-gradient-to-r from-violet-400 via-violet-600 to-violet-400 via-violet-600 animate-shimmer hover:scale-105 transition duration-500 ease-out bg-green-500 rounded-md p-3  font-semibold'
                 >Login</button>
             </form>
             <div className="w-full px-6 py-4  flex flex-col items-center" >
                 <span className="text-zinc-300 mb-2 font-semibold">OU</span>
-                <LoginWithGoole/>
+                <LoginWithGoole />
             </div>
         </div>
     )
